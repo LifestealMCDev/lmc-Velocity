@@ -297,7 +297,7 @@ public class InitialLoginSessionHandler implements MinecraftSessionHandler {
             if (post.isAllowed()) {
                 if (result == AuthComponentResult.authenticated()) {
                     mcConnection.setActiveSessionHandler(StateRegistry.LOGIN,
-                            new AuthSessionHandler(server, inbound, profile, true, ));
+                            new AuthSessionHandler(server, inbound, profile, true, serverId));
                     return post;
                 }
 
@@ -344,8 +344,8 @@ public class InitialLoginSessionHandler implements MinecraftSessionHandler {
         if (this.currentState != expectedState) {
             if (MinecraftDecoder.DEBUG) {
                 logger.error("{} Received an unexpected packet requiring state {}, but we are in {}",
-           inbound,
-           expectedState, this.currentState);
+                        inbound,
+                        expectedState, this.currentState);
             }
             mcConnection.close(true);
         }
