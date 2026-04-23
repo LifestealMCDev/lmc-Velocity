@@ -15,10 +15,10 @@ extensions.configure<PublishingExtension> {
             setUrl(if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl)
         }
 
-        // LifestealMC private repo
+        // Shard private repo
         maven {
-            name = "lifestealmc"
-            url = uri("https://repo.lifestealmc.com/private")
+            name = "shard"
+            url = uri("https://repo.shard.rip/private")
             credentials {
                 username = (findProperty("repoUser") as String?) ?: ""
                 password = (findProperty("repoPass") as String?) ?: ""
