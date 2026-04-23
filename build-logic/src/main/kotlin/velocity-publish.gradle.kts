@@ -4,11 +4,18 @@ plugins {
 }
 
 extensions.configure<PublishingExtension> {
+    publications {
+        create<MavenPublication>("maven") {
+            from(components["java"])
+        }
+    }
     repositories {
         maven {
             credentials(PasswordCredentials::class.java)
 
-            name = if (version.toString().endsWith("SNAPSHOT")) "paperSnapshots" else "paper" // "paper" is seemingly not defined
+            name = if (version.toString()
+                    .endsWith("SNAPSHOT")
+            ) "paperSnapshots" else "paper" // "paper" is seemingly not defined
             val base = "https://artifactory.papermc.io/artifactory"
             val releasesRepoUrl = "$base/releases/"
             val snapshotsRepoUrl = "$base/snapshots/"
@@ -20,8 +27,8 @@ extensions.configure<PublishingExtension> {
             name = "shard"
             url = uri("https://repo.shard.rip/private")
             credentials {
-                username = (findProperty("repoUser") as String?) ?: ""
-                password = (findProperty("repoPass") as String?) ?: ""
+                username = (project.findProperty("shard.username") as String?) ?: System.getenv("SHARD_USERNAME")
+                password = (project.findProperty("shard.password") as String?) ?: System.getenv("SHARD_PASSWORD")
             }
         }
     }
